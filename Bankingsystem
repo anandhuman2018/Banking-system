@@ -1,1 +1,80 @@
+class BankAccount:
+    def __init__(self, account_number, pin, balance=0, mobile_number=None):
+        self.account_number = account_number
+        self.pin = pin
+        self.balance = balance
+        self.mobile_number = mobile_number
 
+    def login(self, account_number, pin):
+        return self.account_number == account_number and self.pin == pin
+
+    def deposit(self, amount):
+        if amount > 0:
+            self.balance += amount
+            print(f"Deposited ₹{amount}. Current balance is ₹{self.balance}.")
+        else:
+            print("Invalid amount. Deposit amount should be positive.")
+
+    def withdraw(self, amount):
+        if amount > 0:
+            if self.balance >= amount:
+                self.balance -= amount
+                print(f"Withdrew ₹{amount}. Current balance is ₹{self.balance}.")
+            else:
+                print("Insufficient balance.")
+        else:
+            print("Invalid amount.")
+
+    def view_balance(self):
+        print(f"Current balance: ₹{self.balance}")
+
+    def reset_pin(self, new_pin):
+        self.pin = new_pin
+        print("PIN reset successful.")
+
+    def change_mobile_number(self, new_mobile_number):
+        self.mobile_number = new_mobile_number
+        print("Mobile number updated successfully.")
+
+account1 = BankAccount("1234567890", "1234", 10000, "+911234567890")
+
+account_number = input("Please enter your account number: ")
+pin = input("Please enter 4-digit PIN: ")
+
+if account1.login(account_number, pin):
+    print("Login successful.")
+    print("Welcome to Entri Bank.")
+
+    while True:
+        print("\nChoose an option:")
+        print("1. View Balance")
+        print("2. Deposit Amount")
+        print("3. Withdraw Amount")
+        print("4. Reset PIN")
+        print("5. Change Mobile Number")
+        print("6. Exit")
+
+        choice = input("Enter your choice (1-6): ")
+
+        if choice == "1":
+            account1.view_balance()
+        elif choice == "2":
+            amount_to_deposit = float(input("Enter amount to deposit: "))
+            account1.deposit(amount_to_deposit)
+        elif choice == "3":
+            amount_to_withdraw = float(input("Enter amount to withdraw: "))
+            account1.withdraw(amount_to_withdraw)
+        elif choice == "4":
+            new_pin = input("Enter new 4-digit PIN: ")
+            account1.reset_pin(new_pin)
+        elif choice == "5":
+            new_mobile_number = input("Enter new mobile number: ")
+            account1.change_mobile_number(new_mobile_number)
+        elif choice == "6":
+            print("Thank you for using Entri Bank service.")
+            break
+        else:
+            print("Invalid choice. Please choose a valid option (1-6).")
+
+else:
+    print("Invalid credentials. Login failed.")
